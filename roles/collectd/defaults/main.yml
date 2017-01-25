@@ -1,0 +1,5 @@
+---
+collectd_version: "5.5.2-1ubuntu0~ppa14.04.1"
+collectd_install_recommends: No
+collectd_interval: 60
+collectd_load_plugins: []

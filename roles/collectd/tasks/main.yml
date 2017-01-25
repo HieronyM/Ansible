@@ -1,0 +1,16 @@
+---
+- name: Add apt_repository
+  apt_repository: repo='ppa:collectd/collectd-5.5' state=present
+  
+- name: Run apt-get update
+  apt: update_cache=yes
+
+- name: Install Collectd
+  apt: pkg=collectd={{ collectd_version }}
+       install_recommends={{ collectd_install_recommends }}
+       state=present
+
+- name: Copy collectd config
+  copy: src=collectd.conf dest=/etc/collectd/collectd.conf
+  notify:
+   - Restart Collectd
