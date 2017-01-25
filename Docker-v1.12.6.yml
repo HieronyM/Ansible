@@ -1,0 +1,6 @@
+---
+- name: Install Docker Version 1.12.6 in ubuntu Trusty
+  hosts: all
+  sudo: yes
+  roles:
+   - Docker-Engine-v1.12.6

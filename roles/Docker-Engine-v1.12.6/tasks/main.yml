@@ -1,0 +1,24 @@
+---
+  - name: Register docker gpg key
+    apt_key: keyserver=pgp.mit.edu id=58118E89F3A912897C070ADBF76221572C52609D
+
+  - name: Add docker engine repository
+    apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-trusty main'
+
+  - name: Install docker-engine
+    apt: name=docker-engine=1.12.6-0~ubuntu-trusty force=yes
+
+  - name: Lock docker engine version
+    command: apt-mark hold docker-engine
+    changed_when: false
+
+  - name: Enable docker-engine on boot
+    service: name=docker enabled=yes
+
+  - name: Add user to docker group
+    user: name=ubuntu groups=docker append=yes
+
+  - name: Setup overlayfs for Docker
+    lineinfile: dest=/etc/default/docker regexp=DOCKER_OPTS line=DOCKER_OPTS='"-s overlay"'
+    notify:
+      - Restart docker-engine
